@@ -29,7 +29,8 @@ void KP(int mass[5][5],int lin){
 	
 //	int helper = new int[lin];
 	int min=11;
-	int *help[3];
+	int** help;
+	help = new int *[3];
 	help[0] = new int[lin];
 	help[1] = new int[lin];
 	help[2] = new int[lin];
