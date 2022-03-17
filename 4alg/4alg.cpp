@@ -31,9 +31,9 @@ void KP(int mass[5][5],int lin){
 	int min=11;
 	int** help;
 	help = new int *[3];
-	help[0] = new int[lin];
-	help[1] = new int[lin];
-	help[2] = new int[lin];
+	help[0] = new int[100];
+	help[1] = new int[100];
+	help[2] = new int[100];
 	int ll = 0;
 	int mm[5] = { 0,0,0,0,0 };
 	int fix = lin;
@@ -110,7 +110,7 @@ int main(){
 
 
 
-
+	cout << "\n\n\n";
 
 
 
