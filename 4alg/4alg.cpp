@@ -28,12 +28,14 @@ void liner(int mass[5][5], int *lin) {
 void KP(int mass[5][5],int lin){
 	
 //	int helper = new int[lin];
-	int min=11;
-	int** help;
+	int min=3;
+
+	int **help;
 	help = new int *[3];
-	for(int i=0;i<3;i++)
-		help[i] = new int[lin];
+	for(int i=0;i<min;i++)
+		help[i] = new int[100];  //Сдесь случается хуета, тип что-то не инициализировано
 	
+	min = 11;
 	int ll = 0;
 	int mm[5] = { 0,0,0,0,0 };
 	int fix = lin;
@@ -113,7 +115,7 @@ int main(){
 
 
 
-
+	cout << endl;
 
 
 
