@@ -33,7 +33,7 @@ void KP(int mass[5][5],int lin){
 	int **help;
 	help = new int *[3];
 	for(int i=0;i<min;i++)
-		help[i] = new int[100];  //Сдесь случается хуета, тип что-то не инициализировано
+		help[i] = new int[100];  
 	
 	min = 11;
 	int ll = 0;
@@ -91,6 +91,58 @@ void KP(int mass[5][5],int lin){
 
 
 
+void BR(int mass[5][5], int lin) {
+
+
+	int help[5];	// массив обратных элементов
+	int min = 11;
+	int ll;
+	bool flag = false;
+//	cout << "\n\n";
+	for (int i = 0; i < 4;i++) {
+		min = 11;
+		for (int j = 0; j < 5; j++) {
+			if (mass[i][j] != 0) {
+				if (i != help[j]) {
+					if (i != 0) {
+						if (help[i - 1] + 1 != j) {
+//							flag = true;
+							if (min > mass[i][j]) {
+								min = mass[i][j];
+								help[i] = j;
+							}
+						}
+					}
+					else
+					{
+						if (min > mass[i][j]) {
+							min = mass[i][j];
+							help[i] = j;
+						}
+					}
+				}
+			}
+		}
+//		cout <<i<<"  " <<help[i] << " / ";
+	}
+
+
+//	cout << "\n\n";
+
+	for(int i=0;i<5;i++)
+		for (int j = 0; j < 5; j++) {
+			if (i < j) {
+				if (mass[i][j] != 0) {
+					if (j != help[i] && i!=help[j]) {
+						mass[i][j] = 0;
+						mass[j][i] = 0;
+					}
+				}
+			}
+		}
+}
+
+
 
 
 int main(){
@@ -113,12 +165,42 @@ int main(){
 	KP(mass,lin);
 
 
+	cout << endl;
 
+
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++)
+			cout << mass[i][j] << " ";
+		cout << endl;
+	}
+
+
+	filing(mass);
 
 	cout << endl;
 
 
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++)
+			cout << mass[i][j] << " ";
+		cout << endl;
+	}
 
+	BR(mass, lin);
+
+
+
+
+
+
+
+
+
+
+
+
+
+	cout << endl;
 
 
 	for (int i = 0; i < 5; i++) {
