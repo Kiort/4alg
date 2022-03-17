@@ -31,9 +31,9 @@ void KP(int mass[5][5],int lin){
 	int min=11;
 	int** help;
 	help = new int *[3];
-	help[0] = new int[lin];
-	help[1] = new int[lin];
-	help[2] = new int[lin];
+	for(int i=0;i<3;i++)
+		help[i] = new int[lin];
+	
 	int ll = 0;
 	int mm[5] = { 0,0,0,0,0 };
 	int fix = lin;
@@ -66,18 +66,22 @@ void KP(int mass[5][5],int lin){
 				help[2][j] = ll;
 			}
 
-	ll = 0;
+	
+	int mirt = 0;
 
 	while (fix !=0) {
-		if (mm[help[1][ll]] < 2 && mm[help[2][ll]] < 2) {
-			mm[help[1][ll]]++;
-			mm[help[2][ll]]++;
+		if (mirt == ll)
+			break;
+
+		if (mm[help[1][mirt]] < 2 && mm[help[2][mirt]] < 2) {
+			mm[help[1][mirt]]++;
+			mm[help[2][mirt]]++;
 		}
 		else {
-			mass[help[1][ll]][help[2][ll]] = 0;
-			mass[help[2][ll]][help[1][ll]] = 0;
+			mass[help[1][mirt]][help[2][mirt]] = 0;
+			mass[help[2][mirt]][help[1][mirt]] = 0;
 		}
-		ll++;
+		mirt++;
 		fix--;
 	}
 	
