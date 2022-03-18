@@ -86,6 +86,9 @@ void KP(int mass[5][5],int lin){
 		mirt++;
 		fix--;
 	}
+	for (int i = 0; i < 3; i++)
+		delete(help[i]);
+	delete(help);
 	
 }
 
@@ -156,7 +159,7 @@ void touK(int mass[5][5]) {		//Ебучие два китайца
 	int gryyb = 0;
 
 	while (ll <= 4 && gryyb<1000) {
-		gryyb++;
+		gryyb++; // Эта штука нужна чтоб алгоритм не застревал в бесконечный цикл ели не способен чтото найти (не трогай ему и так плохо)
 		for(int i=0;i<5;i++)
 			for (int j = 0; j < 5; j++) {
 				mass[i][j]--;
@@ -186,6 +189,9 @@ void touK(int mass[5][5]) {		//Ебучие два китайца
 	mass[help[0][1]][help[1][1]] = help[2][1];	mass[help[1][1]][help[0][1]] = help[2][1];
 	mass[help[0][2]][help[1][2]] = help[2][2];	mass[help[1][2]][help[0][2]] = help[2][2];
 	mass[help[0][3]][help[1][3]] = help[2][3];	mass[help[1][3]][help[0][3]] = help[2][3];
+	for (int i = 0; i < 3; i++)
+		delete(help[i]);
+	delete(help);
 }
 
 int main(){
@@ -223,7 +229,7 @@ int main(){
 
 	time1 = 0, time2 = 0;
 	for (int i = 0; i < raund; i++) {
-		cout << i << " ";
+//		cout << i << " ";
 	filing(mass);
 	time1 = clock();
 	touK(mass);
