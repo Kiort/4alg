@@ -86,9 +86,8 @@ void KP(int mass[5][5],int lin){
 		mirt++;
 		fix--;
 	}
-	for (int i = 0; i < 3; i++)
-		delete(help[i]);
-	delete(help);
+	
+	
 	
 }
 
@@ -99,7 +98,7 @@ void BR(int mass[5][5]) {
 
 	int help[5];	// массив обратных элементов
 	int min = 11;
-	int ll;
+//	int ll;
 	bool flag = false;
 //	cout << "\n\n";
 	for (int i = 0; i < 4;i++) {							// нахождение вершин между которых находятся устраивающие нас пути
@@ -150,9 +149,12 @@ void touK(int mass[5][5]) {		//Ебучие два китайца
 
 	int **help;
 	help = new int* [3];
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++) {
 		help[i] = new int[4];
-
+		for (int j = 0; j < 4;j++) {
+			help[i][j] = 11;
+		}
+	}
 	int ll=0;
 	int l=0;
 	bool flag = true;
@@ -189,9 +191,7 @@ void touK(int mass[5][5]) {		//Ебучие два китайца
 	mass[help[0][1]][help[1][1]] = help[2][1];	mass[help[1][1]][help[0][1]] = help[2][1];
 	mass[help[0][2]][help[1][2]] = help[2][2];	mass[help[1][2]][help[0][2]] = help[2][2];
 	mass[help[0][3]][help[1][3]] = help[2][3];	mass[help[1][3]][help[0][3]] = help[2][3];
-	for (int i = 0; i < 3; i++)
-		delete(help[i]);
-	delete(help);
+
 }
 
 int main(){
