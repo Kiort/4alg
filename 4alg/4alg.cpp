@@ -153,8 +153,10 @@ void touK(int mass[5][5]) {		//Ебучие два китайца
 	int ll=0;
 	int l=0;
 	bool flag = true;
+	int gryyb = 0;
 
-	while (ll <= 4) {
+	while (ll <= 4 && gryyb<1000) {
+		gryyb++;
 		for(int i=0;i<5;i++)
 			for (int j = 0; j < 5; j++) {
 				mass[i][j]--;
@@ -216,16 +218,16 @@ int main(){
 	BR(mass);
 	time2 += clock() - time1;
 	}
-	cout << "\nБорувка  " << time2 / raund;
+	cout << "\nБорувка  " << time2 <<"\n";
 
 
 	time1 = 0, time2 = 0;
 	for (int i = 0; i < raund; i++) {
-
+		cout << i << " ";
 	filing(mass);
 	time1 = clock();
 	touK(mass);
-	time2 +=clock() - time1;
+	time2 += clock() - time1;
 	}
 	cout << "\nКитайцы  " << time2 / raund;
 
