@@ -40,7 +40,7 @@ void KP(int mass[5][5],int lin){
 	int mm[5] = { 0,0,0,0,0 };
 	int fix = lin;
 
-	for(int i=0;i<5;i++)
+	for(int i=0;i<5;i++)					//массив длин и точек
 		for (int j = 0; j < i; j++) {
 			if (mass[i][j] != 0)
 			{
@@ -51,7 +51,7 @@ void KP(int mass[5][5],int lin){
 			}
 		}
 
-	for(int i=0;i<lin;i++)
+	for(int i=0;i<lin;i++)					//Сортировка массива по возрастанию
 		for(int j=0;j<lin;j++)
 			if (help[0][i] < help[0][j]) {
 				ll = help[0][i];
@@ -71,8 +71,8 @@ void KP(int mass[5][5],int lin){
 	
 	int mirt = 0;
 
-	while (fix !=0) {
-		if (mirt == ll)
+	while (fix !=0) {										//Очищение основной матрици
+		if (mirt == ll)		
 			break;
 
 		if (mm[help[1][mirt]] < 2 && mm[help[2][mirt]] < 2) {
@@ -91,7 +91,7 @@ void KP(int mass[5][5],int lin){
 
 
 
-void BR(int mass[5][5], int lin) {
+void BR(int mass[5][5]) {
 
 
 	int help[5];	// массив обратных элементов
@@ -99,7 +99,7 @@ void BR(int mass[5][5], int lin) {
 	int ll;
 	bool flag = false;
 //	cout << "\n\n";
-	for (int i = 0; i < 4;i++) {
+	for (int i = 0; i < 4;i++) {							// нахождение вершин между которых находятся устраивающие нас пути
 		min = 11;
 		for (int j = 0; j < 5; j++) {
 			if (mass[i][j] != 0) {
@@ -129,7 +129,7 @@ void BR(int mass[5][5], int lin) {
 
 //	cout << "\n\n";
 
-	for(int i=0;i<5;i++)
+	for(int i=0;i<5;i++)						//Удаление всего лишнего
 		for (int j = 0; j < 5; j++) {
 			if (i < j) {
 				if (mass[i][j] != 0) {
@@ -143,7 +143,48 @@ void BR(int mass[5][5], int lin) {
 }
 
 
+void touK(int mass[5][5]) {		//Ебучие два китайца
 
+	int **help;
+	help = new int* [3];
+	for (int i = 0; i < 3; i++)
+		help[i] = new int[4];
+
+	int ll=0;
+	int l=0;
+	bool flag = true;
+
+	while (ll <= 4) {
+		for(int i=0;i<5;i++)
+			for (int j = 0; j < 5; j++) {
+				mass[i][j]--;
+				flag = true;
+				if (mass[i][j] == 0) {
+					for (int k = 0; k < 4; k++)
+						if (help[1][k] == i)
+							flag = false;
+					if (flag) {
+						help[0][ll] = i;
+						help[1][ll] = j;
+						help[2][ll] = mass[i][j] + 1+l;
+						ll++;
+					}
+
+				}
+				
+			}
+		l++;
+	}
+
+	for (int i = 0; i < 5; i++)
+		for (int j = 0; j < 5; j++)
+			mass[i][j] = 0;
+
+	mass[help[0][0]][help[1][0]] = help[2][0];	mass[help[1][0]][help[0][0]] = help[2][0];
+	mass[help[0][1]][help[1][1]] = help[2][1];	mass[help[1][1]][help[0][1]] = help[2][1];
+	mass[help[0][2]][help[1][2]] = help[2][2];	mass[help[1][2]][help[0][2]] = help[2][2];
+	mass[help[0][3]][help[1][3]] = help[2][3];	mass[help[1][3]][help[0][3]] = help[2][3];
+}
 
 int main(){
 	setlocale(LC_ALL, "rus");
@@ -151,68 +192,42 @@ int main(){
 	int mass[5][5];
 	int lin;
 
-	filing(mass);
+	int raund = 0;
+	cout << "Введите количество повторений";
+	cin >> raund;
+	double time1=0, time2=0;
+	
+	for (int i = 0; i < raund; i++) {
 
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 5; j++)
-			cout << mass[i][j] << " ";
-		cout << endl;
+		filing(mass);
+		liner(mass, &lin);
+		time1 = clock();
+		KP(mass, lin);
+		time2 += clock() - time1;
 	}
+	cout << "\nКраскал " << time2 / raund;
 
 
-
-	liner(mass,&lin);
-	KP(mass,lin);
-
-
-	cout << endl;
-
-
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 5; j++)
-			cout << mass[i][j] << " ";
-		cout << endl;
-	}
-
+	time1 = 0, time2 = 0;
+	for (int i = 0; i < raund; i++) {
 
 	filing(mass);
-
-	cout << endl;
-
-
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 5; j++)
-			cout << mass[i][j] << " ";
-		cout << endl;
+	time1 = clock();
+	BR(mass);
+	time2 += clock() - time1;
 	}
-
-	BR(mass, lin);
-
+	cout << "\nБорувка  " << time2 / raund;
 
 
+	time1 = 0, time2 = 0;
+	for (int i = 0; i < raund; i++) {
 
-
-
-
-
-
-
-
-
-
-	cout << endl;
-
-
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 5; j++)
-			cout << mass[i][j] << " ";
-		cout << endl;
+	filing(mass);
+	time1 = clock();
+	touK(mass);
+	time2 +=clock() - time1;
 	}
-
-
-
-
-
+	cout << "\nКитайцы  " << time2 / raund;
 
 
 
