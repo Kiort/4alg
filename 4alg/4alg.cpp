@@ -49,7 +49,7 @@ void KP(int **mass,int lin,int koll){
 	int **help;
 	help = new int *[3];
 	for(int i=0;i<min;i++)
-		help[i] = new int[10000];  
+		help[i] = new int[300];  
 	
 	min = 11;
 	int ll = 0;
