@@ -102,6 +102,7 @@ void KP(int **mass,int lin,int koll){
 		mirt++;
 		fix--;
 	}
+	
 	delete [] help;
 	
 	
@@ -210,7 +211,7 @@ void touK(int **mass,int lin, int koll) {		//Ебучие два китайца
 		for (int j = 0; j < koll; j++)
 			mass[i][j] = 0;
 
-	for (int i = 0; i = lin; i++) {
+	for (int i = 0; i < lin; i++) {
 		mass[help[0][i]][help[1][i]] = help[2][i];	
 		mass[help[1][i]][help[0][i]] = help[2][i];
 	}
