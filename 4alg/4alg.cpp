@@ -216,7 +216,7 @@ void touK(int **mass,int lin, int koll) {		//Ебучие два китайца
 		mass[help[1][i]][help[0][i]] = help[2][i];
 	}
 
-	delete(help);
+	delete [] help;
 
 }
 //Эти китайцы меня доебут окончательно когданибудь (вроде сделано)
@@ -277,8 +277,8 @@ int main(){
 		cout << "\nКитайцы  " << time2 / raund;
 
 		for (int i = 0; i < k; i++)
-			delete(mass[i]);
-		delete(mass);
+			delete [] mass[i];
+		delete [] mass;
 	}
 
 }
