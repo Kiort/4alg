@@ -2,45 +2,61 @@
 using namespace std;
 
 
-void filing(int mass[5][5]) {
-	for (int i = 0; i < 5;i++) {
+void filing(int **mass, int koll) {
+	for (int i = 0; i < koll; i++)
+		for (int j = 0; j < koll; j++)
+			mass[i][j] = 0;
+	int *lidr;
+		lidr= new int[koll];
+
+		for (int i = 0; i < koll; i++)
+			lidr[i] = 0;
+
+	for (int i = 0; i < koll;i++) {
 		for (int j = 0; j < i; j++) {
 			if (i != j) {
-				mass[i][j] = rand() % 10;
-				mass[j][i] = mass[i][j];
+				if (lidr[i] < 4 && lidr[j] < 4) {
+					lidr[i]++;
+					lidr[j]++;
+					mass[i][j] = rand() % 10;
+					mass[j][i] = mass[i][j];
+				}
 			}
 
 		}
 		mass[i][i] = 0;
 	}
-}
+	delete [] lidr;
+} 
+//Сделано под денамический массив
 
 
-void liner(int mass[5][5], int *lin) {
+void liner(int **mass, int *lin,int koll) {
 	lin = 0;
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < koll; i++) {
 		for (int j = 0; j < i; j++)
 			if (mass[i][j] != 0)
 				lin++;
 	}
 }
+//Переделаноо под денамический массив
 
-void KP(int mass[5][5],int lin){
+
+void KP(int **mass,int lin,int koll){
 	
-//	int helper = new int[lin];
 	int min=3;
 
 	int **help;
 	help = new int *[3];
 	for(int i=0;i<min;i++)
-		help[i] = new int[100];  
+		help[i] = new int[110];  
 	
 	min = 11;
 	int ll = 0;
 	int mm[5] = { 0,0,0,0,0 };
 	int fix = lin;
 
-	for(int i=0;i<5;i++)					//массив длин и точек
+	for(int i=0;i<koll;i++)					//массив длин и точек
 		for (int j = 0; j < i; j++) {
 			if (mass[i][j] != 0)
 			{
@@ -86,24 +102,29 @@ void KP(int mass[5][5],int lin){
 		mirt++;
 		fix--;
 	}
-	
+	delete [] help;
 	
 	
 }
+// Вроде сделано под денамические массивы
 
 
 
-void BR(int mass[5][5]) {
+void BR(int **mass, int koll) {
 
 
-	int help[5];	// массив обратных элементов
+	int *help;
+	help = new int[koll];	// массив обратных элементов
+	for (int i = 0; i < koll; i++)
+		help[i] = -1;
+
 	int min = 11;
 //	int ll;
 	bool flag = false;
 //	cout << "\n\n";
-	for (int i = 0; i < 4;i++) {							// нахождение вершин между которых находятся устраивающие нас пути
+	for (int i = 0; i < koll;i++) {							// нахождение вершин между которых находятся устраивающие нас пути
 		min = 11;
-		for (int j = 0; j < 5; j++) {
+		for (int j = 0; j < koll; j++) {
 			if (mass[i][j] != 0) {
 				if (i != help[j]) {
 					if (i != 0) {
@@ -131,8 +152,8 @@ void BR(int mass[5][5]) {
 
 //	cout << "\n\n";
 
-	for(int i=0;i<5;i++)						//Удаление всего лишнего
-		for (int j = 0; j < 5; j++) {
+	for(int i=0;i<koll;i++)						//Удаление всего лишнего
+		for (int j = 0; j < koll; j++) {
 			if (i < j) {
 				if (mass[i][j] != 0) {
 					if (j != help[i] && i!=help[j]) {
@@ -142,16 +163,18 @@ void BR(int mass[5][5]) {
 				}
 			}
 		}
+	delete [] help;
 }
+//Вроде сделан под денамический массив
 
 
-void touK(int mass[5][5]) {		//Ебучие два китайца
+void touK(int **mass,int lin, int koll) {		//Ебучие два китайца
 
 	int **help;
 	help = new int* [3];
 	for (int i = 0; i < 3; i++) {
-		help[i] = new int[4];
-		for (int j = 0; j < 4;j++) {
+		help[i] = new int[lin];
+		for (int j = 0; j < lin;j++) {
 			help[i][j] = 11;
 		}
 	}
@@ -160,14 +183,14 @@ void touK(int mass[5][5]) {		//Ебучие два китайца
 	bool flag = true;
 	int gryyb = 0;
 
-	while (ll <= 4 && gryyb<1000) {
+	while (ll <= lin && gryyb<1000) {
 		gryyb++; // Эта штука нужна чтоб алгоритм не застревал в бесконечный цикл ели не способен чтото найти (не трогай ему и так плохо)
-		for(int i=0;i<5;i++)
-			for (int j = 0; j < 5; j++) {
+		for(int i=0;i<koll;i++)
+			for (int j = 0; j < koll; j++) {
 				mass[i][j]--;
 				flag = true;
 				if (mass[i][j] == 0) {
-					for (int k = 0; k < 4; k++)
+					for (int k = 0; k < lin; k++)
 						if (help[1][k] == i)
 							flag = false;
 					if (flag) {
@@ -183,60 +206,78 @@ void touK(int mass[5][5]) {		//Ебучие два китайца
 		l++;
 	}
 
-	for (int i = 0; i < 5; i++)
-		for (int j = 0; j < 5; j++)
+	for (int i = 0; i < koll; i++)
+		for (int j = 0; j < koll; j++)
 			mass[i][j] = 0;
 
-	mass[help[0][0]][help[1][0]] = help[2][0];	mass[help[1][0]][help[0][0]] = help[2][0];
-	mass[help[0][1]][help[1][1]] = help[2][1];	mass[help[1][1]][help[0][1]] = help[2][1];
-	mass[help[0][2]][help[1][2]] = help[2][2];	mass[help[1][2]][help[0][2]] = help[2][2];
-	mass[help[0][3]][help[1][3]] = help[2][3];	mass[help[1][3]][help[0][3]] = help[2][3];
+	for (int i = 0; i = lin; i++) {
+		mass[help[0][i]][help[1][i]] = help[2][i];	
+		mass[help[1][i]][help[0][i]] = help[2][i];
+	}
+
+	delete(help);
 
 }
+//Эти китайцы меня доебут окончательно когданибудь (вроде сделано)
 
-int main(){
+int main(){ 
 	setlocale(LC_ALL, "rus");
-
-	int mass[5][5];
-	int lin;
 
 	int raund = 0;
 	cout << "Введите количество повторений";
 	cin >> raund;
-	double time1=0, time2=0;
-	
-	for (int i = 0; i < raund; i++) {
+	for (int k= 10; k <= 100; k += 10) {
 
-		filing(mass);
-		liner(mass, &lin);
-		time1 = clock();
-		KP(mass, lin);
-		time2 += clock() - time1;
+		cout << "\n\n\nМатрица   "<<k<<" х " <<k<<"\n";
+		int** mass;
+		mass = new int*[k];
+		for (int j = 0; j < k; j++) {
+			mass[j] = new int[k];
+			for (int l = 0; l < k; l++)
+				mass[j][l] = 0;
+		}
+		int lin;
+
+		
+		double time1 = 0, time2 = 0;
+
+		for (int i = 0; i < raund; i++) {
+
+			filing(mass, k);
+			liner(mass, &lin,k);
+			time1 = clock();
+			KP(mass, lin,k);
+			time2 += clock() - time1;
+		}
+		cout << "\nКраскал " << time2 / raund;
+
+
+		time1 = 0, time2 = 0;
+		for (int i = 0; i < raund; i++) {
+
+			filing(mass, k);
+			liner(mass, &lin, k);
+			time1 = clock();
+			BR(mass,k);
+			time2 += clock() - time1;
+		}
+		cout << "\nБорувка  " << time2 << "\n";
+
+
+		time1 = 0, time2 = 0;
+		for (int i = 0; i < raund; i++) {
+			//		cout << i << " ";
+			filing(mass, k);
+			liner(mass, &lin, k);
+			time1 = clock();
+			touK(mass,lin,k);
+			time2 += clock() - time1;
+		}
+		cout << "\nКитайцы  " << time2 / raund;
+
+		for (int i = 0; i < k; i++)
+			delete(mass[i]);
+		delete(mass);
 	}
-	cout << "\nКраскал " << time2 / raund;
-
-
-	time1 = 0, time2 = 0;
-	for (int i = 0; i < raund; i++) {
-
-	filing(mass);
-	time1 = clock();
-	BR(mass);
-	time2 += clock() - time1;
-	}
-	cout << "\nБорувка  " << time2 <<"\n";
-
-
-	time1 = 0, time2 = 0;
-	for (int i = 0; i < raund; i++) {
-//		cout << i << " ";
-	filing(mass);
-	time1 = clock();
-	touK(mass);
-	time2 += clock() - time1;
-	}
-	cout << "\nКитайцы  " << time2 / raund;
-
-
 
 }
