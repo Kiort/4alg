@@ -32,11 +32,11 @@ void filing(int **mass, int koll) {
 
 
 void liner(int **mass, int *lin,int koll) {
-	lin = 0;
+	*lin = 0;
 	for (int i = 0; i < koll; i++) {
 		for (int j = 0; j < i; j++)
 			if (mass[i][j] != 0)
-				lin++;
+				*lin++;
 	}
 }
 //Переделаноо под денамический массив
@@ -49,7 +49,7 @@ void KP(int **mass,int lin,int koll){
 	int **help;
 	help = new int *[3];
 	for(int i=0;i<min;i++)
-		help[i] = new int[110];  
+		help[i] = new int[10000];  
 	
 	min = 11;
 	int ll = 0;
@@ -177,7 +177,7 @@ void touK(int **mass,int lin, int koll) {		//Ебучие два китайца
 	int **help;
 	help = new int* [3];
 	for (int i = 0; i < 3; i++) {
-		help[i] = new int[lin];
+		help[i] = new int[110];
 		for (int j = 0; j < lin;j++) {
 			help[i][j] = 11;
 		}
@@ -232,7 +232,7 @@ int main(){
 	cin >> raund;
 	for (int k= 10; k <= 100; k += 10) {
 
-		cout << "\n\n\nМатрица   "<<k<<" х " <<k<<"\n";
+		cout << "\n\n\nМатрица   "<<k<<" х " <<k;
 		int** mass;
 		mass = new int*[k];
 		for (int j = 0; j < k; j++) {
@@ -265,7 +265,7 @@ int main(){
 			BR(mass,k);
 			time2 += clock() - time1;
 		}
-		cout << "\nБорувка  " << time2 << "\n";
+		cout << "\nБорувка  " << time2;
 
 
 		time1 = 0, time2 = 0;
