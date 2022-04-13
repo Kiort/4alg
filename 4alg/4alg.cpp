@@ -53,7 +53,7 @@ void KP(int **mass,int lin,int koll){
 	
 	min = 11;
 	int ll = 0;
-	int *mm =new int(lin);
+	int *mm =new int[lin];
 	for (int i = 0; i < lin; i++)
 		mm[i] = 0;
 	int fix = lin;
@@ -106,6 +106,7 @@ void KP(int **mass,int lin,int koll){
 	}
 	
 	delete [] help;
+	delete[] mm;
 	
 	
 }
