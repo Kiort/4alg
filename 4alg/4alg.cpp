@@ -53,7 +53,9 @@ void KP(int **mass,int lin,int koll){
 	
 	min = 11;
 	int ll = 0;
-	int mm[5] = { 0,0,0,0,0 };
+	int *mm =new int(lin);
+	for (int i = 0; i < lin; i++)
+		mm[i] = 0;
 	int fix = lin;
 
 	for(int i=0;i<koll;i++)					//массив длин и точек
